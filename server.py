@@ -11,7 +11,7 @@ my_socket.listen(1)
 # createing the client side
 my_socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # connects to the ip and port
-my_socket.connect(('0.0.0.0',5000))
+my_socket.connect((LOCAL_HOST,5000))
 # sends the bytes
 my_socket.send(bytes('POST...'))
 # receives the data
@@ -22,7 +22,7 @@ my_socket.close()
 # creating a new socket for the server
 connection = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 # binding a new socket
-connection.bind(('0.0.0.0', 5000))
+connection.bind((LOCAL_HOST, 5000))
 # setting amount of connections
 connection.listen(1)
 # server connect creates a new socket
