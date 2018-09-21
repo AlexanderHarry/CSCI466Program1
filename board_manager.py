@@ -2,11 +2,10 @@ import sys
 
 length, width = 12, 11
 side = 'ABCDEFGHIJ'
-empty = ' _ _ _ _ _ _ _ _ _ _ _ _'
 matrix = [[0 for x in range(width)] for y in range(length)]
 
 
-def layout_board():
+def start_board():
     for i in range(0, width - 1):
         for j in range(0, length - 1):
             if j == 0 and i > 0:
@@ -27,7 +26,15 @@ def print_ownboard():
         print()
 
 
-def 
-
-layout_board()
+start_board()
 print_ownboard()
+def update_my_board(x, y):
+    if matrix[x][y] == 'C' or matrix[x][y] == 'B' or matrix[x][y] == 'R' or matrix[x][y] == 'S' or matrix[x][y] == 'D':
+
+
+
+#
+#
+# def update_opponent_board()
+
+
