@@ -11,7 +11,7 @@ buffer_size = 1024
 # creating a server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # binds to an address and port
-s.bind(('127.0.0.1', 80))
+s.bind(('localhost', 5000))
 # allows 1 connection
 s.listen(1)
 

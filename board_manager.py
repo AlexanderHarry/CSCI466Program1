@@ -58,5 +58,4 @@ def check_if_hit(x, y):
     else:
         matrix[x][y] = '0'
         return False
-
     pass
