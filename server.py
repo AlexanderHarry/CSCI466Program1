@@ -1,4 +1,11 @@
 import socket
+
+
+class Server:
+    """A class for the server"""
+    pass
+
+
 # sets the buffer size
 buffer_size = 1024
 # creating a server
@@ -11,7 +18,7 @@ s.listen(1)
 conn, addr = s.accept()
 
 data = conn.recv(buffer_size)
-print("Received request: '" + data.decode('utf-8')+"'")
+print("Received request: '" + data.decode('utf-8') + "'")
 
 conn.send('Yes'.encode('utf-8'))
 conn.close()
