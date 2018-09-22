@@ -1,6 +1,7 @@
 import sys
+from random import randint, random
 
-length, width = 12, 11
+length, width = 12, 12
 side = 'ABCDEFGHIJ'
 matrix = [[0 for x in range(width)] for y in range(length)]
 
@@ -11,7 +12,7 @@ class BoardManager(object):
         for i in range(0, width - 1):
             for j in range(0, length - 1):
                 if j == 0 and i > 0:
-                    matrix[i][j] = side[i]
+                    matrix[i][j] = side[i - 1]
                 elif i == 0 and j > 0:
                     matrix[i][j] = j
                 elif i == 0 and j == 0:
@@ -58,5 +59,6 @@ def check_if_hit(x, y):
     else:
         matrix[x][y] = '0'
         return False
+
 
 pass
