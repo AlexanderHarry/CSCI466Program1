@@ -4,10 +4,10 @@ from random import randint, random
 length, width = 12, 12
 side = 'ABCDEFGHIJ'
 matrix = [[0 for x in range(width)] for y in range(length)]
-ship_vert_hor = ["Horizontal", "Vertical"]
-ship_right_left_down_up = ["Right", "Left", "Up", "Down"]
-ship_vert_hor_size = len(ship_vert_hor) - 1
-ship_direction_size = len(ship_right_left_down_up) - 1
+ship_vert_hor_top = ["Horizontal", "Vertical"]
+ship_right_left_down_up_top = ["Right", "Left", "Up", "Down"]
+ship_vert_hor_size = len(ship_vert_hor_top) - 1
+ship_direction_size = len(ship_right_left_down_up_top) - 1
 
 
 class BoardManager(object):
@@ -62,7 +62,7 @@ class BoardManager(object):
         ship_to_insert = randint(0, ship_list_size)
 
         ship_vert_hor_descision = randint(0, ship_vert_hor_size)
-        if ship_vert_hor[ship_vert_hor_descision] == "Vertical":
+        if ship_vert_hor_top[ship_vert_hor_descision] == "Vertical":
             ship_direction_descision = randint(2, 3)
 
 
@@ -78,7 +78,7 @@ class BoardManager(object):
 
     def check_fit(self, ship_insert_info, ship_string_list):
         ship = ship_string_list[ship_insert_info[0]]
-        #if statement to set ship length
+        # if statement to set ship length
         if ship == 'Carrier':
             ship_length = 5
         elif ship == 'Battleship':
@@ -89,8 +89,8 @@ class BoardManager(object):
             ship_length = 2
         else:
             ship_length = sys.maxint
-        direction = ship_vert_hor[ship_insert_info[1]]
-        left_right_up_down = ship_right_left_down_up[ship_insert_info[2]]
+        direction = ship_vert_hor_top[ship_insert_info[1]]
+        left_right_up_down = ship_right_left_down_up_top[ship_insert_info[2]]
         location_x = ship_insert_info[3]
         location_y = ship_insert_info[4]
 
@@ -154,6 +154,53 @@ class BoardManager(object):
                 return True  # a ship can be inserted
             else:
                 return False  # a ship cannot be inserted
+
+        pass
+
+    def insert_ship(self, ship, ship_char):
+        # checks if ship is vertical
+        ship_length = len(ship[0])
+        ship_vertical_hor = ship_vert_hor_top[ship[1]]
+        ship_up_down_left_right = ship_right_left_down_up_top[ship[2]]
+        x = ship[3]
+        y = ship[4]
+
+        if ship_vertical_hor == 'Vertical':
+            if ship_up_down_left_right == 'Up':
+                for i in range(y, y - ship_length, -1):
+                    matrix[x][i] = ship_char
+            elif ship_up_down_left_right == 'Down':
+                for i in range(y, y + ship_length, 1):
+                    matrix[x][i].replaceship_char
+        elif ship_vertical_hor == 'Horizontal':
+            if ship_up_down_left_right == 'Right':
+                for i in range(x, x + ship_length, 1):
+                    matrix[i][y] = ship_char
+            elif ship_up_down_left_right == 'Left':
+                for i in range(x, x - ship_length, - 1):
+                    matrix[i][y] = ship_char
+
+        pass
+
+    def get_char(self, ship):
+        if ship == 0:
+            # returns C for Carrier
+            return 'C'
+        elif ship == 1:
+            # returns B for Battleship
+            return 'B'
+        elif ship == 2:
+            # returns R for Cruiser
+            return 'R'
+        elif ship == 3:
+            # returns S for Submarine
+            return 'S'
+        elif ship == 4:
+            # returns D for Destroyer
+            return 'D'
+        # returns Water
+        else:
+            return '_'
 
         pass
 
