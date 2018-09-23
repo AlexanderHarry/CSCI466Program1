@@ -95,7 +95,7 @@ class BoardManager(object):
             ship_length = 3
             character = 'S'
         elif ship == 'Destroyer':
-            ship_length = 2
+            ship_length = 1
             character = 'D'
         else:
             ship_length = sys.maxint

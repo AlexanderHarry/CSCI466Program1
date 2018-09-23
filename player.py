@@ -3,7 +3,7 @@ from board_manager import BoardManager
 
 # from server import Server
 class Player():
-    ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer"]
+    ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
     ship_direction = ["Horizontal", "Vertical"]
     ship_right_left_down_up = ["Right", "Left", "Up", "Down"]
     ship_descending_list = ship_list  # temp variable to pass in to add ships to
