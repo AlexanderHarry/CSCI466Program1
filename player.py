@@ -13,7 +13,6 @@ class Player():
     board.print_board()
     # loops untill all the ships are inserted
     while ship_descending_list:
-        board.print_board()
         # returns list for ship to be inserted [name, direction, up, x, y] just int values
         ship_insert_info = board.get_insert_info(ship_descending_list)
         location_ok = board.check_fit(ship_insert_info, ship_descending_list)
@@ -26,6 +25,6 @@ class Player():
             # gets the ships character value to be put on board
             ship_char_val = board.get_char(this_ship)
             # runs insert ship method
-            board.insert_ship(ship, ship_char_val)
+            board.insert_ship(ship, ship_char_val, board.get_ship_length(this_ship))
             ship_descending_list.remove(ship_list[this_ship])
             board.print_board()

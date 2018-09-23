@@ -77,8 +77,10 @@ class BoardManager(object):
         pass
 
     def check_fit(self, ship_insert_info, ship_string_list):
+        counter = 0
         ship = ship_string_list[ship_insert_info[0]]
         # if statement to set ship length
+
         if ship == 'Carrier':
             ship_length = 5
         elif ship == 'Battleship':
@@ -99,17 +101,18 @@ class BoardManager(object):
             # initial location
             if left_right_up_down == "Right":
 
-                if (width) - location_x >= ship_length and location_x != 0:
+                if (width - 1) - location_x >= ship_length and location_x != 0:
                     # checks that the ship falls in
                     # the board and will fit
 
                     # loops to make sure the ship wont interfere with a ship already on the
-                    for i in range(location_x, location_x + ship_length):
+                    for i in range(location_x, location_x + ship_length - 1, 1):
+                        counter += 1
                         # board
                         if matrix[i][location_y] != '_' or location_x + ship_length > 11:
                             return False  # returns a false that the ship cannot be inserted
-
-                    return True  # returns true if the ship can be inserted
+                    if counter == ship_length:
+                        return True  # returns true if the ship can be inserted
                 else:
                     return False  # returns a false that the ship cannot be inserted
             if left_right_up_down == "Left":  # checks that the shift is being placed to the left of the initial peg
@@ -117,49 +120,51 @@ class BoardManager(object):
                 # will fit
                 if location_x >= ship_length and location_x != 0:
                     # checks to make sure the ship will fit.  loops in i-- order
-                    for i in range(location_x, location_x - ship_length, -1):
+                    for i in range(location_x, location_x - ship_length - 1, -1):
+                        counter += 1
                         if matrix[i][
-                            location_y] != '_' or location_x - ship_length < 1:  # makes sure a current ship isn't floating here
+                            location_y] != '_':  # makes sure a current ship isn't floating here
                             return False  # a ship cannot be inserted here
-
-                    return True  # a ship can be inserted
+                    if counter == ship_length:
+                        return True  # a ship can be inserted
                 else:
                     return False  # a ship cannot be inserted
         if direction == "Vertical":
             if left_right_up_down == "Up":  # checks if the ship is being located up from the initial matrix location
-                if location_y != 0 and (location_y) >= ship_length:
+                if location_y != 0 and location_y >= ship_length:
 
                     # checks that the ship doesn't fall on the unallowed boarder
                     #  and the the initial length is OK
                     # loops from initial array location in i-- order
 
-                    for i in range(location_y, location_y - ship_length, - 1):
+                    for i in range(location_y, location_y - ship_length + 1, - 1):
                         # makes sure a ship is not here
-
-                        if matrix[location_x][i] != '_' or location_y - ship_length < 1:
+                        counter += 1
+                        if matrix[location_x][i] != '_':
                             return False  # ship is not allowed to be inserted
-
-                    return True  # a ship is allowed here
+                    if counter == ship_length:
+                        return True  # a ship is allowed here
                 else:
                     return False  # a ship is not allowed here
 
             if left_right_up_down == "Down":  # checks for a ship to be inserted down from the initial matrix
                 # location
-                if location_y != 0 and (
-                        length - location_y) >= ship_length:  # checks to make sure the ship will fit in this location
+                # checks to make sure the ship will fit in this location
+                if location_y != 0 and (length - location_y + 1) >= ship_length:
                     #  and that it doesn't fall on the boarder
-                    for i in range(location_y, location_y + ship_length):  # loops in to see if a ship is already here
-                        if matrix[location_x][i] != '_' or location_y + ship_length > 11:
+                    for i in range(location_y, location_y + ship_length - 1, 1):  # loops in to see if a ship is already here
+                        counter += 1
+                        if matrix[location_x][i] != '_':
                             return False  # ship cannot be inserted
-                return True  # a ship can be inserted
+                if counter == ship_length:
+                    return True  # a ship can be inserted
             else:
                 return False  # a ship cannot be inserted
 
         pass
 
-    def insert_ship(self, ship, ship_char):
+    def insert_ship(self, ship, ship_char, ship_length):
         # checks if ship is vertical
-        ship_length = len(ship[0])
         ship_vertical_hor = ship_vert_hor_top[ship[1]]
         ship_up_down_left_right = ship_right_left_down_up_top[ship[2]]
         x = ship[3]
@@ -170,14 +175,14 @@ class BoardManager(object):
                 for i in range(y, y - ship_length, -1):
                     matrix[x][i] = ship_char
             elif ship_up_down_left_right == 'Down':
-                for i in range(y, y + ship_length, 1):
-                    matrix[x][i].replaceship_char
+                for i in range(y, y + ship_length - 1, 1):
+                    matrix[x][i] = ship_char
         elif ship_vertical_hor == 'Horizontal':
             if ship_up_down_left_right == 'Right':
-                for i in range(x, x + ship_length, 1):
+                for i in range(x, x + ship_length - 1, 1):
                     matrix[i][y] = ship_char
             elif ship_up_down_left_right == 'Left':
-                for i in range(x, x - ship_length, - 1):
+                for i in range(x, x - ship_length - 1, - 1):
                     matrix[i][y] = ship_char
 
         pass
@@ -202,6 +207,23 @@ class BoardManager(object):
         else:
             return '_'
 
+        pass
+
+    def get_ship_length(self, ship):
+               # gets Carrier size
+        if ship == 0:
+            return 5
+        # gets Battleship size
+        elif ship == 1:
+            return 4
+        # returns size for cruiser or submarine
+        elif ship == 2 or ship == 3:
+            return 3
+        # returns size for destroyer
+        elif ship == 4:
+            return 2
+        else:
+            return 9999
         pass
 
 
