@@ -1,10 +1,18 @@
+from doctest import master
+import tkinter
+from random import randint
+
 from board_manager import BoardManager
+from tkinter import *
 
 # lists of ships for the game
 ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
 ship_direction = ["Horizontal", "Vertical"]
 ship_right_left_down_up = ["Right", "Left", "Up", "Down"]
 ship_descending_list = ship_list  # temp variable to pass in to add ships to
+x_choice = 'Y'
+y_choice = 23
+shots_fired = []
 
 
 #  playerServer = Server()
@@ -25,6 +33,30 @@ def set_up_player_board(board):
     pass
 
 
+def fire():
+    # shot_fired = False
+    # while shot_fired == False:
+    #     x = randint(1, 10)
+    #     y = randint(1, 10)
+    #     if [x, y] not in shots_fired:
+    #         board.shoot_at(x, y)
+    #         shot_fired = True
+    sys.stdout = open('test.txt', 'w')
+    print("test")
+
+
+print()
+pass
+
+
+def chooseMove(board):
+    popup = Tk()
+    fire_button = Button(popup, text="Fire!", command=fire)
+    fire_button.pack(fill=X)
+    popup.mainloop()
+    pass
+
+
 class Player():
     # lists of ships for the game
     ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
@@ -36,4 +68,5 @@ class Player():
     # set up player board
     set_up_player_board(board)
     board.print_board()
-
+    chooseMove(board)
+    board.print_board()
