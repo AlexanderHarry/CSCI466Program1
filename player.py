@@ -1,37 +1,39 @@
-# imports the board manager class
-from random import randint
-
 from board_manager import BoardManager
 
-# from server import Server
-ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer"]
+# lists of ships for the game
+ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
 ship_direction = ["Horizontal", "Vertical"]
 ship_right_left_down_up = ["Right", "Left", "Up", "Down"]
-board = BoardManager()
+ship_descending_list = ship_list  # temp variable to pass in to add ships to
 
 
-# Method to check if the player has inserted all of their ships onto the board
-def isEmpty(list):
-    if ship_list:
-        return True
-    else:
-        return False
+#  playerServer = Server()
+
+# from server import Server
+def set_up_player_board(board):
+    # starts board
+    board.start_board()
+    # loops untill all the ships are inserted
+    while ship_descending_list:
+        # returns list for ship to be inserted [name, direction, up, x, y] just int values
+        ship_insert_info = board.get_insert_info(ship_descending_list)
+        # checks that the location works and inserts if true
+        location_ok = board.check_fit(ship_insert_info, ship_descending_list)
+        if location_ok:
+            # removes the ship from the list, keeps track of game pieces placed on start up
+            ship_descending_list.remove(ship_list[ship_insert_info[0]])
+    pass
 
 
-def setup_ships(ship_direction, ship_right_left_down_up):
-    ship_selected = ship_list.pop(randint(0, len(ship_list - 1)))  # pops a random ship to insert
-    ship_direction_selected = ship_direction(randint(0, len(ship_direction - 1)))  # selects a random ship direction
-    # selects randomly what way a ship will go from its starting location
-    ship_right_left_down_up_selection = ship_right_left_down_up(randint(0, len(ship_right_left_down_up - 1)))
-    rand_x = randint(1, 11)  # sets a random x in matrix
-    rand_y = randint(1, 11)  # sets a random y in matrix
-    # runs if statement if the ship will fit
-    if board.does_ship_fit(ship_selected, ship_direction_selected, ship_right_left_down_up_selection, rand_x, rand_y):
-        # inserts ship into the board
-        board.insert_ships(ship_selected, ship_direction_selected, ship_right_left_down_up_selection, rand_x, rand_y)
-    else:
-        ship_list.append(ship_selected)  # appends the ship that didn't fit back into the list
+class Player():
+    # lists of ships for the game
+    ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
+    ship_direction = ["Horizontal", "Vertical"]
+    ship_right_left_down_up = ["Right", "Left", "Up", "Down"]
+    ship_descending_list = ship_list  # temp variable to pass in to add ships to
+    #  playerServer = Server()
+    board = BoardManager()
+    # set up player board
+    set_up_player_board(board)
+    board.print_board()
 
-    class Player:
-        while not isEmpty(ship_list):
-            setup_ships(ship_direction, ship_right_left_down_up)
