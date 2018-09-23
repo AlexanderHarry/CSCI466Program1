@@ -23,8 +23,9 @@ class Player():
             ship = [ship_list[this_ship], ship_insert_info[1], ship_insert_info[2],
                     ship_insert_info[3], ship_insert_info[4]]
             # gets the ships character value to be put on board
-            ship_char_val = board.get_char(this_ship)
+            ship_char_val = board.get_char(ship_descending_list[this_ship])
             # runs insert ship method
-            board.insert_ship(ship, ship_char_val, board.get_ship_length(this_ship))
+            board.insert_ship(ship, ship_char_val, board.get_ship_length(ship_descending_list[this_ship]))
             ship_descending_list.remove(ship_list[this_ship])
-            board.print_board()
+
+        board.print_board()

@@ -155,7 +155,7 @@ class BoardManager(object):
                 # checks to make sure the ship will fit in this location
                 if location_y != 0 and (length - location_y + 1) >= ship_length:
                     #  and that it doesn't fall on the boarder
-                    for i in range(location_y, location_y + ship_length - 1, 1):  # loops in to see if a ship is already here
+                    for i in range(location_y, location_y + ship_length, 1):  # loops in to see if a ship is already here
                         if counter == ship_length: break
                         counter += 1
                         if matrix[location_x][i] != '_':
@@ -176,35 +176,36 @@ class BoardManager(object):
 
         if ship_vertical_hor == 'Vertical':
             if ship_up_down_left_right == 'Up':
-                for i in range(y, y - ship_length, -1):
-                    matrix[x][i] = ship_char
+                for i in range(ship_length, 0, -1):
+                    matrix[x][y - i] = ship_char
             elif ship_up_down_left_right == 'Down':
-                for i in range(y, y + ship_length - 1, 1):
-                    matrix[x][i] = ship_char
+                for i in range(0, ship_length, 1):
+                    matrix[x][i + y] = ship_char
         elif ship_vertical_hor == 'Horizontal':
             if ship_up_down_left_right == 'Right':
-                for i in range(x, x + ship_length - 1, 1):
-                    matrix[i][y] = ship_char
+                for i in range(0, ship_length, 1):
+                    matrix[i + x][y] = ship_char
             elif ship_up_down_left_right == 'Left':
-                for i in range(x, x - ship_length - 1, - 1):
-                    matrix[i][y] = ship_char
+                for i in range(ship_length, 0,  -1):
+                    matrix[x - i][y] = ship_char
 
         pass
 
     def get_char(self, ship):
-        if ship == 0:
+
+        if ship == "Carrier":
             # returns C for Carrier
             return 'C'
-        elif ship == 1:
+        elif ship == "Battleship":
             # returns B for Battleship
             return 'B'
-        elif ship == 2:
+        elif ship == "Cruiser":
             # returns R for Cruiser
             return 'R'
-        elif ship == 3:
+        elif ship == "Submarine":
             # returns S for Submarine
             return 'S'
-        elif ship == 4:
+        elif ship == "Destroyer":
             # returns D for Destroyer
             return 'D'
         # returns Water
@@ -215,16 +216,16 @@ class BoardManager(object):
 
     def get_ship_length(self, ship):
                # gets Carrier size
-        if ship == 0:
+        if ship == "Carrier":
             return 5
         # gets Battleship size
-        elif ship == 1:
+        elif ship == "Battleship":
             return 4
         # returns size for cruiser or submarine
-        elif ship == 2 or ship == 3:
+        elif ship == "Cruiser" or ship == "Submarine":
             return 3
         # returns size for destroyer
-        elif ship == 4:
+        elif ship == "Destroyer":
             return 2
         else:
             return 9999
