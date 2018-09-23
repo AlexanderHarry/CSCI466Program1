@@ -110,6 +110,7 @@ class BoardManager(object):
                             return False  # returns a false that the ship cannot be inserted
                     if counter == ship_length:
                         counter = 0
+                        # inserts the ships into the board
                         for i in range(x, x + ship_length, 1):
                             if counter == ship_length: break
                             counter += 1
@@ -130,6 +131,7 @@ class BoardManager(object):
                             return False  # a ship cannot be inserted here
                     if counter == ship_length:
                         counter = 0
+                        # inserts the ships into the board
                         for i in range(x, x - ship_length - 1, -1):
                             if counter == ship_length: break
                             counter += 1
@@ -153,6 +155,7 @@ class BoardManager(object):
                             return False  # ship is not allowed to be inserted
                     if counter == ship_length:
                         counter = 0
+                        # inserts the ships into the board
                         for i in range(y, y - ship_length, -1):
                             if counter == ship_length: break
                             counter += 1
@@ -173,6 +176,7 @@ class BoardManager(object):
                             return False  # ship cannot be inserted
                 if counter == ship_length:
                     counter = 0
+                    # inserts the ships into the board
                     for i in range(y, y + ship_length + 1, 1):
                         if counter == ship_length: break
                         counter += 1
