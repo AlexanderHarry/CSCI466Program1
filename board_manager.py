@@ -107,6 +107,7 @@ class BoardManager(object):
 
                     # loops to make sure the ship wont interfere with a ship already on the
                     for i in range(location_x, location_x + ship_length - 1, 1):
+                        if counter == ship_length: break
                         counter += 1
                         # board
                         if matrix[i][location_y] != '_' or location_x + ship_length > 11:
@@ -121,6 +122,7 @@ class BoardManager(object):
                 if location_x >= ship_length and location_x != 0:
                     # checks to make sure the ship will fit.  loops in i-- order
                     for i in range(location_x, location_x - ship_length - 1, -1):
+                        if counter == ship_length: break
                         counter += 1
                         if matrix[i][
                             location_y] != '_':  # makes sure a current ship isn't floating here
@@ -138,6 +140,7 @@ class BoardManager(object):
                     # loops from initial array location in i-- order
 
                     for i in range(location_y, location_y - ship_length + 1, - 1):
+                        if counter == ship_length: break
                         # makes sure a ship is not here
                         counter += 1
                         if matrix[location_x][i] != '_':
@@ -153,6 +156,7 @@ class BoardManager(object):
                 if location_y != 0 and (length - location_y + 1) >= ship_length:
                     #  and that it doesn't fall on the boarder
                     for i in range(location_y, location_y + ship_length - 1, 1):  # loops in to see if a ship is already here
+                        if counter == ship_length: break
                         counter += 1
                         if matrix[location_x][i] != '_':
                             return False  # ship cannot be inserted
