@@ -2,7 +2,6 @@ from doctest import master
 import tkinter
 from random import randint
 from board_manager import BoardManager
-from tkinter import *
 
 # lists of ships for the game
 ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
