@@ -14,7 +14,8 @@ my_battleship_count = ['B', 'B', 'B', 'B']
 my_sub_count = ['S', 'S', 'S']
 my_cruiser_count = ['R', 'R', 'R']
 my_destroyer_count = ['D', "D"]
-opponents_ships_sunk = []
+opponents_ships_sunk = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
+
 
 
 def check_if_sunk(ship):
@@ -54,6 +55,7 @@ class BoardManager(object):
         for i in range(0, width - 1):
             for j in range(0, length - 1):
                 print(opponentBoard[i][j], end=" ")
+
             print()
 
     pass
@@ -216,6 +218,7 @@ class BoardManager(object):
         pass
 
     def check_if_hit(self, x, y):
+
         ship_sunk = False
         if matrix[y][x] == 'C':
             my_carrier_count.pop(0)
@@ -223,7 +226,7 @@ class BoardManager(object):
             opponentBoard[y][x] = 'X'
             sunk = check_if_sunk(my_carrier_count)
             if sunk:
-                opponents_ships_sunk.append("Carrier")
+                opponents_ships_sunk.remove('Carrier')
             return True, "hit", sunk, "Carrier"
         elif matrix[y][x] == 'B':
             my_battleship_count.pop(0)
@@ -231,7 +234,7 @@ class BoardManager(object):
             opponentBoard[y][x] = 'X'
             sunk = check_if_sunk(my_battleship_count)
             if sunk:
-                opponents_ships_sunk.append("Battleship")
+                opponents_ships_sunk.remove("Battleship")
             return True, "hit", sunk, "Battleship"
         elif matrix[y][x] == 'R':
             my_cruiser_count.pop(0)
@@ -239,7 +242,7 @@ class BoardManager(object):
             opponentBoard[y][x] = 'X'
             sunk = check_if_sunk(my_cruiser_count)
             if sunk:
-                opponents_ships_sunk.append("Cruiser")
+                opponents_ships_sunk.remove("Cruiser")
             return True, "hit", sunk, "Cruiser"
         elif matrix[y][x] == 'S':
             my_sub_count.pop(0)
@@ -247,25 +250,26 @@ class BoardManager(object):
             opponentBoard[y][x] = 'X'
             sunk = check_if_sunk(my_sub_count)
             if sunk:
-                opponents_ships_sunk.append("Submarine")
+                opponents_ships_sunk.remove("Submarine")
             return True, "hit", sunk, "Submarine"
         elif matrix[y][x] == 'D':
             my_destroyer_count.pop(0)
             matrix[y][x] = 'X'
             opponentBoard[y][x] = 'X'
             sunk = True
-            opponents_ships_sunk.append("Destroyer")
+            opponents_ships_sunk.remove("Destroyer")
             return True, "hit", sunk, "Destroyer"
 
-        else:
+        elif matrix[y][x] == '_':
             opponentBoard[y][x] = 'o'
 
             return False, "not hit", False, "no Ship"
+        return False, "not hit", False, "no Ship"
 
         pass
 
     def game_still_goint(self):
-        if len(opponents_ships_sunk) >= 5:
+        if opponents_ships_sunk == []:
             return False
         else: return True
         pass

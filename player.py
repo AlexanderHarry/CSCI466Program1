@@ -14,6 +14,7 @@ y_choice = 23
 shots_fired_track = []
 ships_sunk = []
 board = BoardManager()
+last_hit = []
 
 
 #  playerServer = Server()
@@ -47,42 +48,56 @@ def already_played(x, y):
     pass
 
 
+def get_x_y():
+    boolean = True
+    while boolean:
+        x = rand_coordinate()
+        y = rand_coordinate()
+        boolean = already_played(x,y)
+    return x, y
+    pass
+
 
 def fire():
     last_hit = []
     hit_ship = False
     continue_loop = True
-    while len(ships_sunk) != 5:
+    while len(ships_sunk) != 6:
 
         if not continue_loop: break
-        if not hit_ship:
-            x = rand_coordinate()
-            y = rand_coordinate()
         if last_hit != []:
-            number = last_hit.pop()
-            x = number[0]
-            y = number[1]
             if not already_played(x + 1, y) and x + 1 < 11:
                 x += 1
+                return x, y
             elif not already_played(x - 1, y) and x - 1 > 0:
                 x -= 1
+                return x, y
+
             elif not already_played(x, y + 1) and y + 1 < 11:
                 y += 1
+                return x, y
             elif not already_played(x, y - 1) and y - 1 > 0:
                 y -= 1
+                return x, y
+            else:
+                x, y = get_x_y()
+        if not hit_ship:
+          x, y = get_x_y()
+
+
+
 
         mark, hit_or_not, sunk, ship_name = board.check_if_hit(x, y)
         print(hit_or_not)
         shots_fired_track.append([x, y])
         if mark == True:
             hit_ship = True
-            last_hit.append([x, y])
-
+            last_hit = [x,y]
             if sunk:
+
                 ships_sunk.append(ship_name)
                 hit_ship = False
         if not mark:
-            last_hit = []
             hit_ship = False
             continue_loop = False
 
@@ -105,6 +120,7 @@ def chooseMove():
 
 class Player():
     # lists of ships for the game
+
     ship_list = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
     ship_direction = ["Horizontal", "Vertical"]
     ship_right_left_down_up = ["Right", "Left", "Up", "Down"]
@@ -113,6 +129,6 @@ class Player():
     # set up player board
     set_up_player_board(board)
     board.print_board()
-    while board.game_still_goint():
+    while board.game_still_goint() == True:
         chooseMove()
-    board.print_board()
+        board.print_board()
