@@ -1,6 +1,6 @@
-from doctest import master
-import tkinter
-from random import randint
+# from doctest import master
+# import tkinter
+# from random import randint
 
 from board_manager import BoardManager
 from tkinter import *
