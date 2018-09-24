@@ -1,0 +1,11 @@
+  1 2 3 4 5 6 7 8 9 10 
+A X o o X o o o o o o 
+B X o o X o o o o o o 
+C X o o X o o X o o o 
+D X X o X o o o o o o 
+E X X o o o o o o o o 
+F o X o o o o o o o o 
+G o o o o o o X o o o 
+H o o X X X o o o o o 
+I o o o o o o o o o o 
+J o o o o o o o o o o 

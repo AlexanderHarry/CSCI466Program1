@@ -4,10 +4,26 @@ from random import randint, random
 length, width = 12, 12
 side = 'ABCDEFGHIJ'
 matrix = [[0 for x in range(width)] for y in range(length)]
+opponentBoard = [[0 for x in range(width)] for y in range(length)]
 ship_vert_hor_top = ["Horizontal", "Vertical"]
 ship_right_left_down_up_top = ["Right", "Left", "Up", "Down"]
 ship_vert_hor_size = len(ship_vert_hor_top) - 1
 ship_direction_size = len(ship_right_left_down_up_top) - 1
+my_carrier_count = ['C', 'C', 'C', 'C', 'C']
+my_battleship_count = ['B', 'B', 'B', 'B']
+my_sub_count = ['S', 'S', 'S']
+my_cruiser_count = ['R', 'R', 'R']
+my_destroyer_count = ['D', "D"]
+opponents_ships_sunk = ["Carrier", "Battleship", "Cruiser", "Submarine", "Destroyer", "Destroyer"]
+
+
+
+def check_if_sunk(ship):
+    if not ship:
+        return True
+    else:
+        return False
+    pass
 
 
 class BoardManager(object):
@@ -17,12 +33,16 @@ class BoardManager(object):
             for j in range(0, length - 1):
                 if j == 0 and i > 0:
                     matrix[i][j] = side[i - 1]
+                    opponentBoard[i][j] = side[i - 1]
                 elif i == 0 and j > 0:
                     matrix[i][j] = j
+                    opponentBoard[i][j] = j
                 elif i == 0 and j == 0:
                     matrix[i][j] = ' '
+                    opponentBoard[i][j] = ' '
                 else:
                     matrix[i][j] = '_'
+                    opponentBoard[i][j] = '_'
                 pass
 
     def print_board(self):
@@ -31,26 +51,12 @@ class BoardManager(object):
             for j in range(0, length - 1):
                 print(matrix[i][j], end=" ")
             print()
+        sys.stdout = open('opponent_board.txt', 'w')
+        for i in range(0, width - 1):
+            for j in range(0, length - 1):
+                print(opponentBoard[i][j], end=" ")
 
-    pass
-
-    def convert_user_input(x, y):
-        if x.isalpha():
-            found = False
-            while not found:
-                for i in side:
-                    if x == side[i]:
-                        new_x = i
-                        found = True
-                    else:
-                        found = False
-        else:
-            print('coordinate X invalid')
-        if not y.isint():
-            print('coordinate Y invalid')
-        else:
-            hit = check_if_hit(new_x, y)
-        return hit
+            print()
 
     pass
 
@@ -110,6 +116,7 @@ class BoardManager(object):
                             return False  # returns a false that the ship cannot be inserted
                     if counter == ship_length:
                         counter = 0
+                        # inserts the ships into the board
                         for i in range(x, x + ship_length, 1):
                             if counter == ship_length: break
                             counter += 1
@@ -130,6 +137,7 @@ class BoardManager(object):
                             return False  # a ship cannot be inserted here
                     if counter == ship_length:
                         counter = 0
+                        # inserts the ships into the board
                         for i in range(x, x - ship_length - 1, -1):
                             if counter == ship_length: break
                             counter += 1
@@ -153,6 +161,7 @@ class BoardManager(object):
                             return False  # ship is not allowed to be inserted
                     if counter == ship_length:
                         counter = 0
+                        # inserts the ships into the board
                         for i in range(y, y - ship_length, -1):
                             if counter == ship_length: break
                             counter += 1
@@ -173,6 +182,7 @@ class BoardManager(object):
                             return False  # ship cannot be inserted
                 if counter == ship_length:
                     counter = 0
+                    # inserts the ships into the board
                     for i in range(y, y + ship_length + 1, 1):
                         if counter == ship_length: break
                         counter += 1
@@ -207,15 +217,61 @@ class BoardManager(object):
 
         pass
 
+    def check_if_hit(self, x, y):
 
-def check_if_hit(x, y):
-    if matrix[x][y] == 'C' or matrix[x][y] == 'B' or matrix[x][y] == 'R' or matrix[x][y] == 'S' or matrix[x][y] == 'D' \
-            or matrix[x][y] == 'D':
-        matrix[x][y] = 'X'
-        return True
-    else:
-        matrix[x][y] = '0'
-        return False
+        ship_sunk = False
+        if matrix[y][x] == 'C':
+            my_carrier_count.pop(0)
+            matrix[y][x] = 'X'
+            opponentBoard[y][x] = 'X'
+            sunk = check_if_sunk(my_carrier_count)
+            if sunk:
+                opponents_ships_sunk.remove('Carrier')
+            return True, "hit", sunk, "Carrier"
+        elif matrix[y][x] == 'B':
+            my_battleship_count.pop(0)
+            matrix[y][x] = 'X'
+            opponentBoard[y][x] = 'X'
+            sunk = check_if_sunk(my_battleship_count)
+            if sunk:
+                opponents_ships_sunk.remove("Battleship")
+            return True, "hit", sunk, "Battleship"
+        elif matrix[y][x] == 'R':
+            my_cruiser_count.pop(0)
+            matrix[y][x] = 'X'
+            opponentBoard[y][x] = 'X'
+            sunk = check_if_sunk(my_cruiser_count)
+            if sunk:
+                opponents_ships_sunk.remove("Cruiser")
+            return True, "hit", sunk, "Cruiser"
+        elif matrix[y][x] == 'S':
+            my_sub_count.pop(0)
+            matrix[y][x] = 'X'
+            opponentBoard[y][x] = 'X'
+            sunk = check_if_sunk(my_sub_count)
+            if sunk:
+                opponents_ships_sunk.remove("Submarine")
+            return True, "hit", sunk, "Submarine"
+        elif matrix[y][x] == 'D':
+            my_destroyer_count.pop(0)
+            matrix[y][x] = 'X'
+            opponentBoard[y][x] = 'X'
+            sunk = True
+            opponents_ships_sunk.remove("Destroyer")
+            return True, "hit", sunk, "Destroyer"
+
+        elif matrix[y][x] == '_':
+            opponentBoard[y][x] = 'o'
+
+            return False, "not hit", False, "no Ship"
+        return False, "not hit", False, "no Ship"
+
+        pass
+
+    def game_still_goint(self):
+        if opponents_ships_sunk == []:
+            return False
+        else: return True
+        pass
 
 
-pass
