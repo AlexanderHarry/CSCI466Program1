@@ -261,7 +261,7 @@ class BoardManager(object):
             return True, "hit", sunk, "Destroyer"
 
         elif matrix[y][x] == '_':
-            opponentBoard[y][x] = 'o'
+            opponentBoard[y][x] = '.'
 
             return False, "not hit", False, "no Ship"
         return False, "not hit", False, "no Ship"
